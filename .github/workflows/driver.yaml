@@ -17,6 +17,13 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Build
-        shell: cmd
+        shell: pwsh
         run: |
           MSBuild.exe CheatExpert\CheatExpert.vcxproj /p:Platform="x64" /p:Configuration="${{ matrix.configuration }}"
+          New-Item -ItemType Directory -Path C:\builtfiles -Force > $null
+          Compress-Archive -Path CheatExpert\x64\Release\CheatExpert.sys -DestinationPath C:\builtfiles\Compiled_x64.zip
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Atrifact
+          path: C:\builtfiles\Compiled_x64.zip
+          if-no-files-found: error
