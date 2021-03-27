@@ -18,4 +18,4 @@ jobs:
       - name: Build
         shell: cmd
         run: |
-        MSBuild.exe CheatExpert\CheatExpert.vcxproj
+          MSBuild.exe CheatExpert\CheatExpert.vcxproj /p:Platform="x64" /p:Configuration="${{ matrix.configuration }}"
