@@ -1,14 +1,15 @@
 name: Build Driver
 on:
   push:
-  - '.github/**'
-  - 'CheatExpert/**'
+    paths:
+      - '.github/**'
+      - 'CheatExpert/**'
 jobs:
   driver:
     name: Build driver
     strategy:
       matrix:
-      configuration: [Release]
+        configuration: [Release]
     runs-on: windows-latest
     steps:
       - name: Checkout
