@@ -1,6 +1,7 @@
 #include <ntddk.h>
 #include <windef.h>
 #include "public.h"
+#include "struct10.h"
 
 PHANDLE_TABLE_ENTRY ExpLookupHandleTableEntry(PHANDLE_TABLE pHandleTable, HANDLE handle)
 {

@@ -32,6 +32,8 @@ EXTERN_C NTSTATUS DispatchClose(PDEVICE_OBJECT pDevObj, PIRP pIrp)
 	return STATUS_SUCCESS;
 }
 
+IoGrantHandlePack GrandHandlePack;
+
 EXTERN_C NTSTATUS DispatchIoctl(PDEVICE_OBJECT pDevObj, PIRP pIrp)
 {
 	NTSTATUS status = STATUS_INVALID_DEVICE_REQUEST;

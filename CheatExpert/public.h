@@ -8,12 +8,6 @@ ULONG PrintLog(const char* fmt, ...);
 
 #define IOCTL_GRANTHANDLE		CTL_CODE(FILE_DEVICE_UNKNOWN, 0x805, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
-struct IoGrantHandlePack
-{
-	HANDLE handle;
-	ACCESS_MASK access;
-	int ObjectTableOffset;
-}GrandHandlePack;
 
 typedef struct _HANDLE_TABLE_ENTRY
 {
@@ -37,10 +31,6 @@ typedef struct _HANDLE_TABLE_ENTRY
 	};
 } HANDLE_TABLE_ENTRY, * PHANDLE_TABLE_ENTRY;
 
-typedef struct _HANDLE_TABLE
-{
-	char padding[100];
-} HANDLE_TABLE, * PHANDLE_TABLE;
 
 typedef signed char        int8_t;
 typedef short              int16_t;
@@ -50,5 +40,12 @@ typedef unsigned char      uint8_t;
 typedef unsigned short     uint16_t;
 typedef unsigned int       uint32_t;
 typedef unsigned long long uint64_t;
+
+struct IoGrantHandlePack
+{
+	HANDLE handle;
+	ACCESS_MASK access;
+	int ObjectTableOffset;
+};
 
 NTSTATUS GrantHandleAccess(IoGrantHandlePack param);
