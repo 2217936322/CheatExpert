@@ -1,0 +1,21 @@
+name: Build Driver
+on:
+  push:
+  - '.github/**'
+  - 'CheatExpert/**'
+jobs:
+  driver:
+    name: Build driver
+    strategy:
+      matrix:
+      configuration: [Release]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+      - name: Build
+      shell: cmd
+      run: |
+        MSBuild.exe CheatExpert\CheatExpert.vcxproj

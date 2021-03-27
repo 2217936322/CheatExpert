@@ -1,0 +1,86 @@
+;
+; CheatExpert.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Sample ; TODO: edit Class
+ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171} ; TODO: edit ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=CheatExpert.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+
+[DestinationDirs]
+DefaultDestDir = 12
+CheatExpert_Device_CoInstaller_CopyFiles = 11
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+CheatExpert.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%CheatExpert.DeviceDesc%=CheatExpert_Device, Root\CheatExpert ; TODO: edit hw-id
+
+[CheatExpert_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+CheatExpert.sys
+
+;-------------- Service installation
+[CheatExpert_Device.NT.Services]
+AddService = CheatExpert,%SPSVCINST_ASSOCSERVICE%, CheatExpert_Service_Inst
+
+; -------------- CheatExpert driver install sections
+[CheatExpert_Service_Inst]
+DisplayName    = %CheatExpert.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\CheatExpert.sys
+
+;
+;--- CheatExpert_Device Coinstaller installation ------
+;
+
+[CheatExpert_Device.NT.CoInstallers]
+AddReg=CheatExpert_Device_CoInstaller_AddReg
+CopyFiles=CheatExpert_Device_CoInstaller_CopyFiles
+
+[CheatExpert_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[CheatExpert_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[CheatExpert_Device.NT.Wdf]
+KmdfService =  CheatExpert, CheatExpert_wdfsect
+[CheatExpert_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ClassName="Samples" ; TODO: edit ClassName
+DiskName = "CheatExpert Installation Disk"
+CheatExpert.DeviceDesc = "CheatExpert Device"
+CheatExpert.SVCDESC = "CheatExpert Service"
