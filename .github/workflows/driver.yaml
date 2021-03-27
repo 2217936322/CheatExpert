@@ -16,6 +16,6 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
       - name: Build
-      shell: cmd
-      run: |
+        shell: cmd
+        run: |
         MSBuild.exe CheatExpert\CheatExpert.vcxproj
